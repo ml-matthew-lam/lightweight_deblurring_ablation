@@ -1,0 +1,31 @@
+# dataset
+/GOPRO_Large/
+
+# weights and checkpoints
+/checkpoints/
+/weights/
+
+# logs
+/runs/
+/logs/
+
+# Python, Colab and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Environments
+/env/
+/venv/
+/.conda/
+Pipfile.lock
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
