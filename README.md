@@ -7,6 +7,7 @@ To implement SSIM using convolutions, we consider the values in the $x$ and $y$ 
 - $E(X)= x* w$, where $w$ is a kernel with weights summing to $1$
 - $\mathrm{Var}(X) = E(X^2)-[E(X)]^2$
 - $\mathrm{Cov}(X,Y)=E(XY)-E(X)E(Y)$
+
 Thus, we can follow these steps to calculate the average SSIM across all channels and patches centered at each pixel. The predicted tensor $\mathbf x$ and ground truth tensor $\mathbf y$ have dimensions $[B,C,H,W]$.
 - Apply a depthwise convolution ($\sum \mathrm{weights} = 1$) to the predicted tensor. Do the same for the ground truth. This produces maps of $\mu_x$ and $\mu_y$ values for each of the channels. We will call the resulting tensors $[\mu_x]$ and $[\mu_y]$, each of dimensions $[B,C,H,W]$.
 - Apply the same depthwise convolution to $\mathbf x \odot \mathbf x$ and $\mathbf y \odot \mathbf y$, then subtract $[\mu_x^2]$ and $[\mu_y^2]$ respectively. This produces tensors $[\sigma_x^2]$ and $[\sigma_y^2]$, each of dimensions $[B,C,H,W]$.
