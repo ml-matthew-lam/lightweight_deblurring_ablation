@@ -9,7 +9,7 @@ from PIL import Image
 
 
 class GoProDataset(Dataset):
-    def __init__(self, path, crop_size, train_or_test): 
+    def __init__(self, path, crop_size, train_or_test, max_images=None): 
         ''' 
         Args:
             path (str): filepath to dataset
@@ -26,6 +26,10 @@ class GoProDataset(Dataset):
         search_path = os.path.join(path, split_dir, '*', 'blur', '*.png')
         self.blur_paths = sorted(glob(search_path))
         self.sharp_paths = [path.replace('blur', 'sharp') for path in self.blur_paths]
+
+        if max_images is not None:
+            self.blur_paths = self.blur_paths[:max_images]
+            self.sharp_paths = self.sharp_paths[:max_images]
 
     def __len__(self):
         return len(self.blur_paths)
@@ -45,6 +49,10 @@ class GoProDataset(Dataset):
             if random.random() > 0.5:
                 blur_img = TF.hflip(blur_img)
                 sharp_img = TF.hflip(sharp_img)
+            # randomly flip image vertically
+            if random.random() > 0.5:
+                blur_img = TF.vflip(blur_img)
+                sharp_img = TF.vflip(sharp_img)
         else:
             blur_img = TF.center_crop(blur_img, self.crop_size)
             sharp_img = TF.center_crop(sharp_img, self.crop_size)
